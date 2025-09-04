@@ -80,12 +80,6 @@ class _BasketState extends State<Basket> {
                               items.remove(key);
                             },
                           ),
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () {
-                              items.add(key);
-                            },
-                          ),
                         ],
                       )
                     ],

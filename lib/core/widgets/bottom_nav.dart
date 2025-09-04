@@ -20,6 +20,8 @@ class BottomNav extends StatelessWidget {
     return Scaffold(
       body: child,
       bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: Colors.lightGreen,
+
         currentIndex: currentIndex,
         onTap: (index) {
           switch (index) {
