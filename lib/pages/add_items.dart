@@ -59,7 +59,7 @@ class _AddItemsState extends State<AddItems> {
                   SizedBox(height: 16),
                   ElevatedButton(
                     onPressed: () => addItem(context),
-                    child: Text("Ekle"),
+                    child: Text("Add"),
                   ),
                 ],
               ),

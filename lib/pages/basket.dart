@@ -1,4 +1,6 @@
+import 'package:example/models/cardmodel.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class Basket extends StatefulWidget {
   const Basket({super.key});
@@ -10,27 +12,90 @@ class Basket extends StatefulWidget {
 class _BasketState extends State<Basket> {
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Expanded(
-          child: GridView.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+    return Scaffold(
+      appBar: AppBar(title: Text("Basket")),
+      body: Consumer<CardModel>(
+        builder: (context, items, child) {
+          var entries = items.items.entries.toList();
+          return GridView.builder(
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               crossAxisCount: 2,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
             ),
-            itemCount: 6,
+            itemCount: entries.length,
             itemBuilder: (context, index) {
-              return const Card(
-                color: Colors.grey,
-                child: Center(
-                  child: Text('hello'),
+              var entry = entries[index];
+              String key = entry.key;
+              int value = entry.value;
+              return Padding(
+                padding: EdgeInsets.all(8),
+                child: Card(
+                  elevation: 4,
+                  margin: EdgeInsets.all(6),
+                  child: Column(
+                    children: [
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Image.asset(
+                              'assets/items/$key.png',
+                              fit: BoxFit.fitHeight,
+                              height: 65,
+                              width: 65,
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Center(
+                              child: Text(
+                                key,
+                                style: TextStyle(
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 10),
+                      Row(
+                        children: [
+                          Expanded(
+                            child: Center(child: Text(value.toString())),
+                          ),
+                        ],
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          IconButton(
+                            icon: Icon(Icons.remove),
+                            onPressed: () {
+                              items.remove(key);
+                            },
+                          ),
+                          IconButton(
+                            icon: Icon(Icons.add),
+                            onPressed: () {
+                              items.add(key);
+                            },
+                          ),
+                        ],
+                      )
+                    ],
+                  ),
                 ),
               );
             },
-          ),
-        ),
-      ],
+          );
+        },
+      ),
     );
   }
 }
