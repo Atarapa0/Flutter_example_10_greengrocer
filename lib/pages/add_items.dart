@@ -1,25 +1,37 @@
-import 'package:example/models/cardmodel.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:example/models/cardmodel.dart';
 
 class AddItems extends StatefulWidget {
   const AddItems({super.key});
 
   @override
   State<AddItems> createState() => _AddItemsState();
-
 }
 
 class _AddItemsState extends State<AddItems> {
-  late TextEditingController _controller;
-  var i = 0;
-  // Ürün ekleme fonksiyonu
+  late TextEditingController _textController;
+
+
+  @override
+  void initState() {
+    super.initState();
+    _textController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
+
+  // Ürün ekleme
   void addItem(BuildContext context) {
-    final value = _controller.text.trim();
+    final value = _textController.text.trim();
     if (value.isNotEmpty) {
       final counter = Provider.of<CardModel>(context, listen: false);
-      counter.add(value); // sadece ürünü ekle
-      _controller.clear();
+      counter.add(value);
+      _textController.clear();
 
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(content: Text('Ürün eklendi: $value')),
@@ -27,47 +39,35 @@ class _AddItemsState extends State<AddItems> {
     }
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = TextEditingController();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  // Resim seçme
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("Add Product")),
-        body: Column(
+      appBar: AppBar(title: Text("Add Product"), backgroundColor: Colors.greenAccent,),
+      backgroundColor: Colors.green,
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
           children: [
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Column(
-                children: [
-                  TextField(
-                    controller: _controller,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(),
-                      labelText: 'Add Product',
-                    ),
-                  ),
-                  SizedBox(height: 16),
-                  ElevatedButton(
-                    onPressed: () => addItem(context),
-                    child: Text("Add"),
-                  ),
-                ],
+            // Ürün ismi
+            TextField(
+              controller: _textController,
+              decoration: InputDecoration(
+                border: OutlineInputBorder(),
+                labelText: 'Add Product',
               ),
             ),
 
+            SizedBox(height: 16),
+
+            ElevatedButton(
+              onPressed: () => addItem(context),
+              child: Text("Add"),
+            ),
           ],
         ),
-      );
-
-    }
+      ),
+    );
+  }
 }

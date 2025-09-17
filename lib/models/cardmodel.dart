@@ -12,12 +12,11 @@ class CardModel with ChangeNotifier{
     if (items.containsKey(productName) && items[productName]! > 0) {
       items[productName] = items[productName]! - 1;
 
-      if (items[productName] == 0) {
-        items.remove(productName); // 0'a inerse listeden kaldır
-      }
+
 
       notifyListeners();
     }
   }
+
 
 }

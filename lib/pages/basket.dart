@@ -13,7 +13,8 @@ class _BasketState extends State<Basket> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Basket")),
+      appBar: AppBar(title: Text("Basket"), backgroundColor: Colors.greenAccent,),
+      backgroundColor: Colors.green,
       body: Consumer<CardModel>(
         builder: (context, items, child) {
           var entries = items.items.entries.toList();
@@ -28,64 +29,67 @@ class _BasketState extends State<Basket> {
               var entry = entries[index];
               String key = entry.key;
               int value = entry.value;
-              return Padding(
-                padding: EdgeInsets.all(8),
-                child: Card(
-                  elevation: 4,
-                  margin: EdgeInsets.all(6),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Image.asset(
-                              'assets/items/$key.png',
-                              fit: BoxFit.fitHeight,
-                              height: 65,
-                              width: 65,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Center(
-                              child: Text(
-                                key,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Center(child: Text(value.toString())),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.remove),
-                            onPressed: () {
-                              items.remove(key);
-                            },
-                          ),
-                        ],
-                      )
-                    ],
-                  ),
-                ),
-              );
+             if(value!= 0){
+               return Padding(
+                 padding: EdgeInsets.all(8),
+                 child: Card(
+                   elevation: 4,
+                   margin: EdgeInsets.all(6),
+                   child: Column(
+                     children: [
+                       Row(
+                         children: [
+                           Expanded(
+                             child: Image.asset(
+                               'assets/items/$key.png',
+                               fit: BoxFit.fitHeight,
+                               height: 65,
+                               width: 65,
+                             ),
+                           ),
+                         ],
+                       ),
+                       SizedBox(height: 10),
+                       Row(
+                         children: [
+                           Expanded(
+                             child: Center(
+                               child: Text(
+                                 key,
+                                 style: TextStyle(
+                                   fontSize: 20,
+                                   fontWeight: FontWeight.bold,
+                                 ),
+                               ),
+                             ),
+                           ),
+                         ],
+                       ),
+                       SizedBox(height: 10),
+                       Row(
+                         children: [
+                           Expanded(
+                             child: Center(child: Text(value.toString())),
+                           ),
+                         ],
+                       ),
+                       Row(
+                         mainAxisAlignment: MainAxisAlignment.center,
+                         children: [
+                           IconButton(
+                             icon: Icon(Icons.remove),
+                             onPressed: () {
+                               items.remove(key);
+                             },
+                           ),
+                         ],
+                       )
+                     ],
+                   ),
+                 ),
+               );
+             }
+             return null;
             },
           );
         },
