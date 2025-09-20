@@ -21,9 +21,10 @@ class _GreengrocerState extends State<Greengrocer> {
             var entries = items.items.entries.toList();
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 1,
+                crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
+                childAspectRatio: 5/6,
               ),
               itemCount: entries.length,
               itemBuilder: (context, index) {
@@ -73,7 +74,7 @@ class _GreengrocerState extends State<Greengrocer> {
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  price.toString(),
+                                  "${price.toString()}₺",
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,

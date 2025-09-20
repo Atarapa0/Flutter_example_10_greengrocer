@@ -20,9 +20,11 @@ class _BasketState extends State<Basket> {
           var entries = items.items.entries.toList();
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 1,
+              crossAxisCount: 2,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
+              childAspectRatio: 5/6,
+
             ),
             itemCount: entries.length,
             itemBuilder: (context, index) {

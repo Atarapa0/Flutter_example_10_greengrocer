@@ -14,8 +14,9 @@ class CardModel with ChangeNotifier{
       price: productPrice,
       image: productImage,
     );
-    items[product] = (items[product] ?? 0);
+    items[product] = 0;
     notifyListeners();
+
   }
   void counterAdd(int idController) {
     ProductModel? keyFound;
@@ -23,24 +24,30 @@ class CardModel with ChangeNotifier{
     items.forEach((product, count) {
       if (product.id == idController) {
         keyFound = product;
+        print(product.name);
       }
     });
 
-    items[keyFound!][value] = items[keyFound!]! + 1;
+    items[keyFound!] = items[keyFound!]! + 1; // count artar
       notifyListeners();
+
 
   }
 
 
   void remove(String productName) {
-
     ProductModel? keyFound;
     items.forEach((product, count) {
       if (product.name == productName) {
         keyFound = product;
       }
     });
-    items[keyFound!] = items[keyFound!]! - 1;
-    notifyListeners();
+    if (items[keyFound!] != 0) {
+      if (items[keyFound!] == 1) {
+        items[keyFound!] = items[keyFound!]! - 1;
+        //items[keyFound!] = items[keyFound!]! - 1;
+        notifyListeners();
+      }
     }
+  }
   }
