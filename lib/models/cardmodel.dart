@@ -1,22 +1,46 @@
+import 'package:example/models/productmodel.dart';
 import 'package:flutter/material.dart';
 
+
+
 class CardModel with ChangeNotifier{
-  Map<String,int> items={};
-  void add(String productName) {
-    // ürün daha önce eklendiyse count'u artır, yoksa 1 olarak başlat
-    items[productName] = (items[productName] ?? 0) + 1;
+  int _idCounter = 1; // otomatik id üretmek için
+  Map<ProductModel, int> items = {};
+
+  void add(String productName,String productImage,int productPrice) {
+    var product = ProductModel(
+      id: _idCounter++,
+      name: productName,
+      price: productPrice,
+      image: productImage,
+    );
+    items[product] = (items[product] ?? 0);
     notifyListeners();
   }
+  void counterAdd(int idController) {
+    ProductModel? keyFound;
 
-  void remove(String productName) {
-    if (items.containsKey(productName) && items[productName]! > 0) {
-      items[productName] = items[productName]! - 1;
+    items.forEach((product, count) {
+      if (product.id == idController) {
+        keyFound = product;
+      }
+    });
 
-
-
+    items[keyFound!][value] = items[keyFound!]! + 1;
       notifyListeners();
-    }
+
   }
 
 
-}
+  void remove(String productName) {
+
+    ProductModel? keyFound;
+    items.forEach((product, count) {
+      if (product.name == productName) {
+        keyFound = product;
+      }
+    });
+    items[keyFound!] = items[keyFound!]! - 1;
+    notifyListeners();
+    }
+  }

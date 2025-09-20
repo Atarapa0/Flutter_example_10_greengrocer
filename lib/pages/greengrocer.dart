@@ -21,14 +21,16 @@ class _GreengrocerState extends State<Greengrocer> {
             var entries = items.items.entries.toList();
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                crossAxisCount: 2,
+                crossAxisCount: 1,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
               ),
               itemCount: entries.length,
               itemBuilder: (context, index) {
                 var entry = entries[index];
-                String key = entry.key;
+                String imgUrl = entry.key.image;
+                String name = entry.key.name;
+                int price=entry.key.price;
                 int value = entry.value;
                 return Padding(
                   padding: EdgeInsets.all(8),
@@ -41,7 +43,7 @@ class _GreengrocerState extends State<Greengrocer> {
                           children: [
                             Expanded(
                               child: Image.asset(
-                                'assets/items/$key.png',
+                                imgUrl,
                                 fit: BoxFit.fitHeight,
                                 height: 65,
                                 width: 65,
@@ -55,7 +57,23 @@ class _GreengrocerState extends State<Greengrocer> {
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  key,
+                                  name,
+                                  style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(height: 10),
+                        Row(
+                          children: [
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  price.toString(),
                                   style: TextStyle(
                                     fontSize: 20,
                                     fontWeight: FontWeight.bold,
@@ -79,7 +97,7 @@ class _GreengrocerState extends State<Greengrocer> {
                             IconButton(
                               icon: Icon(Icons.add),
                               onPressed: () {
-                                items.add(key);
+                                items.counterAdd(value);
                               },
                             ),
                           ],

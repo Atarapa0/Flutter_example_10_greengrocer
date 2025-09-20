@@ -20,15 +20,18 @@ class _BasketState extends State<Basket> {
           var entries = items.items.entries.toList();
           return GridView.builder(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2,
+              crossAxisCount: 1,
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
             ),
             itemCount: entries.length,
             itemBuilder: (context, index) {
               var entry = entries[index];
-              String key = entry.key;
+              String imgUrl = entry.key.image;
+              String name = entry.key.name;
+              int price=entry.key.price;
               int value = entry.value;
+              int _idController = entry.key.id;
              if(value!= 0){
                return Padding(
                  padding: EdgeInsets.all(8),
@@ -41,7 +44,7 @@ class _BasketState extends State<Basket> {
                          children: [
                            Expanded(
                              child: Image.asset(
-                               'assets/items/$key.png',
+                               imgUrl,
                                fit: BoxFit.fitHeight,
                                height: 65,
                                width: 65,
@@ -55,7 +58,23 @@ class _BasketState extends State<Basket> {
                            Expanded(
                              child: Center(
                                child: Text(
-                                 key,
+                                 name,
+                                 style: TextStyle(
+                                   fontSize: 20,
+                                   fontWeight: FontWeight.bold,
+                                 ),
+                               ),
+                             ),
+                           ),
+                         ],
+                       ),
+                       SizedBox(height: 10),
+                       Row(
+                         children: [
+                           Expanded(
+                             child: Center(
+                               child: Text(
+                                 '$price',
                                  style: TextStyle(
                                    fontSize: 20,
                                    fontWeight: FontWeight.bold,
@@ -79,7 +98,7 @@ class _BasketState extends State<Basket> {
                            IconButton(
                              icon: Icon(Icons.remove),
                              onPressed: () {
-                               items.remove(key);
+                               items.remove(name);
                              },
                            ),
                          ],
@@ -89,7 +108,7 @@ class _BasketState extends State<Basket> {
                  ),
                );
              }
-             return null;
+
             },
           );
         },
