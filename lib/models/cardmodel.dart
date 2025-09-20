@@ -12,8 +12,7 @@ class CardModel with ChangeNotifier {
       price: productPrice,
       image: productImage,
     );
-    items[product] = 2;
-    print(productName + productPrice.toString());
+    items[product] = 0;
     notifyListeners();
   }
 
@@ -53,4 +52,34 @@ class CardModel with ChangeNotifier {
       notifyListeners();
     }
   }
+
+  double totalPrice(){
+    double totalPrice=0;
+    items.forEach((product, value){
+      for(int i=0;i<value;i++){
+          totalPrice=totalPrice+product.price;
+      }
+    });
+    notifyListeners();
+    return totalPrice;
+
+  }
+
+  int totalCount(){
+    int totalCount=0;
+    items.forEach((product, value){
+      for(int i=0;i<value;i++){
+        totalCount++;
+      }
+    });
+    notifyListeners();
+    return totalCount;
+  }
 }
+
+/*
+
+	qtyOf(Product p): sepetteki miktarı döndürür (yoksa 0)
+	•	totalCount: tüm adetlerin toplamı
+	•	totalPrice: Σ (price * qty) (double)
+	*/
