@@ -98,7 +98,7 @@ class _GreengrocerState extends State<Greengrocer> {
                             IconButton(
                               icon: Icon(Icons.add),
                               onPressed: () {
-                                items.counterAdd(value);
+                                items.counterAdd(entries[index].key.id);
                               },
                             ),
                           ],

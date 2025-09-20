@@ -33,7 +33,7 @@ class _BasketState extends State<Basket> {
               String name = entry.key.name;
               int price=entry.key.price;
               int value = entry.value;
-              int _idController = entry.key.id;
+              int idController = entry.key.id;
              if(value!= 0){
                return Padding(
                  padding: EdgeInsets.all(8),
@@ -100,7 +100,7 @@ class _BasketState extends State<Basket> {
                            IconButton(
                              icon: Icon(Icons.remove),
                              onPressed: () {
-                               items.remove(name);
+                               items.remove(idController);
                              },
                            ),
                          ],
