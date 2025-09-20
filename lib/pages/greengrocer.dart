@@ -24,7 +24,7 @@ class _GreengrocerState extends State<Greengrocer> {
                 crossAxisCount: 2,
                 mainAxisSpacing: 10,
                 crossAxisSpacing: 10,
-                childAspectRatio: 5/6,
+                childAspectRatio: 4/5,
               ),
               itemCount: entries.length,
               itemBuilder: (context, index) {
@@ -36,7 +36,7 @@ class _GreengrocerState extends State<Greengrocer> {
                 return Padding(
                   padding: EdgeInsets.all(8),
                   child: Card(
-                    elevation: 4,
+                    elevation: 20,
                     margin: EdgeInsets.all(6),
                     child: Column(
                       children: [

@@ -1,5 +1,9 @@
+import 'dart:io';
+import 'package:image_picker/image_picker.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:provider/provider.dart';
 import 'package:example/models/cardmodel.dart';
 
@@ -13,7 +17,6 @@ class AddItems extends StatefulWidget {
 class _AddItemsState extends State<AddItems> {
   late TextEditingController _textController;
   late TextEditingController _priceController;
-
 
   @override
   void initState() {
@@ -32,18 +35,40 @@ class _AddItemsState extends State<AddItems> {
   // Ürün ekleme
   void addItem(BuildContext context) {
     final name = _textController.text.trim();
-    final imgUrl='assets/items/apple.png';
+    final imgUrl = _imageFile!.path;
     final price = int.tryParse(_priceController.text.trim());
-
 
     if (name.isNotEmpty) {
       final counter = Provider.of<CardModel>(context, listen: false);
-      counter.add(name,imgUrl,price!);
+      counter.add(name, imgUrl, price!);
       _textController.clear();
 
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Ürün eklendi: $name')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text('Ürün eklendi: $name')));
+    }
+  }
+
+  File? _imageFile;
+
+  Future<void> _pickAndSaveImage() async {
+    final picker = ImagePicker();
+    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickedFile != null) {
+      // uygulamanın local documents dizinini bul
+      final directory = await getApplicationDocumentsDirectory();
+      final fileName = "${DateTime.now().millisecondsSinceEpoch}.png";
+      final path = "${directory.path}/$fileName";
+
+      // resmi yeni konuma kaydet
+      final File newImage = await File(pickedFile.path).copy(path);
+
+      setState(() {
+        _imageFile = newImage;
+      });
+
+      print("Resim kaydedildi: $path");
     }
   }
 
@@ -52,7 +77,10 @@ class _AddItemsState extends State<AddItems> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Add Product"), backgroundColor: Colors.greenAccent,),
+      appBar: AppBar(
+        title: Text("Add Product"),
+        backgroundColor: Colors.greenAccent,
+      ),
       backgroundColor: Colors.green,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -75,16 +103,25 @@ class _AddItemsState extends State<AddItems> {
                 labelText: 'Add Product Price',
               ),
             ),
-            SizedBox(height: 16,),
-        TextField(//img yükleme alanı
-      ),
-      SizedBox(height:16,),
+            SizedBox(height: 16),
+            Center(
+              child: _imageFile == null
+                  ? Text("Resim seçilmedi")
+                  : Image.file(_imageFile!, height: 120),
+            ),
+
+
+            SizedBox(height: 16),
             ElevatedButton(
               onPressed: () => addItem(context),
               child: Text("Add"),
             ),
           ],
         ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: _pickAndSaveImage,
+        child: Icon(Icons.add_a_photo),
       ),
     );
   }
