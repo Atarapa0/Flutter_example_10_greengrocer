@@ -18,10 +18,10 @@ final router = GoRouter(
         ),
         GoRoute(
           path: '/add-items',
-          pageBuilder: (context, state) => const NoTransitionPage( child: AddItems()),        ),
+          pageBuilder: (context, state) => const NoTransitionPage( child: AddItems())),
         GoRoute(
           path: '/basket',
-          pageBuilder: (context, state) => const NoTransitionPage( child: Basket()),        ),
+          pageBuilder: (context, state) => const NoTransitionPage( child: Basket())),
       ],
     )
   ],

@@ -18,7 +18,7 @@ class _BasketState extends State<Basket> {
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text("Basket"), Text("${card.totalPrice().toString()}₺")],
+          children: [Text("Basket"), Text("${card.totalPrice.toString()}₺")],
         ),
         backgroundColor: Colors.greenAccent,
       ),
@@ -28,7 +28,7 @@ class _BasketState extends State<Basket> {
           var entries = items.items.entries
               .where((e) => e.value > 0)
               .toList();
-          if(card.totalCount()>0){
+          if(card.totalCount>0){
             return GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
@@ -60,6 +60,7 @@ class _BasketState extends State<Basket> {
                                   fit: BoxFit.fitHeight,
                                   height: 65,
                                   width: 65,
+                                  errorBuilder: (_, __, ___) => const Icon(Icons.image_not_supported),
                                 ),
                               ),
                             ],

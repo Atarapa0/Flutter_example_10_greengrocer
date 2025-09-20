@@ -38,7 +38,7 @@ class _AddItemsState extends State<AddItems> {
     final imgUrl = _imageFile!.path;
     final price = int.tryParse(_priceController.text.trim());
 
-    if (name.isNotEmpty) {
+    if (name.isNotEmpty || price != null || price! > 0 || _imageFile != null) {
       final counter = Provider.of<CardModel>(context, listen: false);
       counter.add(name, imgUrl, price!);
       _textController.clear();
@@ -47,6 +47,10 @@ class _AddItemsState extends State<AddItems> {
         context,
       ).showSnackBar(SnackBar(content: Text('Ürün eklendi: $name')));
     }
+    else{
+      ScaffoldMessenger.of(context,).showSnackBar(SnackBar(content: Text("Make sure you fill in all the fields")));
+    }
+
   }
 
   File? _imageFile;

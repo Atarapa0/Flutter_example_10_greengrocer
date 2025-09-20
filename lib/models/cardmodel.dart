@@ -53,33 +53,24 @@ class CardModel with ChangeNotifier {
     }
   }
 
-  double totalPrice(){
+  double get totalPrice{
     double totalPrice=0;
     items.forEach((product, value){
       for(int i=0;i<value;i++){
           totalPrice=totalPrice+product.price;
       }
     });
-    notifyListeners();
     return totalPrice;
 
   }
 
-  int totalCount(){
+  int get totalCount{
     int totalCount=0;
     items.forEach((product, value){
       for(int i=0;i<value;i++){
         totalCount++;
       }
     });
-    notifyListeners();
     return totalCount;
   }
 }
-
-/*
-
-	qtyOf(Product p): sepetteki miktarı döndürür (yoksa 0)
-	•	totalCount: tüm adetlerin toplamı
-	•	totalPrice: Σ (price * qty) (double)
-	*/
