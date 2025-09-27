@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../models/cardmodel.dart';
+import '../widgets/product_card.dart';
 
 class Greengrocer extends StatefulWidget {
   const Greengrocer({super.key});
@@ -36,88 +37,19 @@ class _GreengrocerState extends State<Greengrocer> {
               String name = entry.key.name;
               int price = entry.key.price;
               int value = entry.value;
-              return Padding(
-                padding: EdgeInsets.all(8),
-                child: Card(
-                  elevation: 20,
-                  margin: EdgeInsets.all(6),
-                  child: Column(
-                    children: [
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Image.asset(
-                              imgUrl,
-                              fit: BoxFit.fitHeight,
-                              height: 65,
-                              width: 65,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Center(
-                              child: Text(
-                                name,
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Center(
-                              child: Text(
-                                "${price.toString()}₺",
-                                style: TextStyle(
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 10),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: Center(child: Text(value.toString())),
-                          ),
-                        ],
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          IconButton(
-                            icon: Icon(Icons.add),
-                            onPressed: () => context
-                                .read<CardModel>()
-                                .counterAdd(entries[index].key.id),
-                          ),
-                          /*onPressed: () {
-                                items.counterAdd(entries[index].key.id);
-                              },
-                            ),*/
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              );
+              return productCard(
+                  imgUrl,
+                  name,
+                  price,
+                  value,
+                  context,
+                  entries,
+                  index);
             },
           );
         },
       ),
     );
   }
+
 }
