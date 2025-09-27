@@ -39,7 +39,7 @@ class _AddItemsState extends State<AddItems> {
     final price = int.tryParse(_priceController.text.trim());
 
     if (name.isNotEmpty || price != null || price! > 0 || _imageFile != null) {
-      final counter = Provider.of<CardModel>(context, listen: false);
+      final counter = context.read<CardModel>();
       counter.add(name, imgUrl, price!);
       _textController.clear();
 

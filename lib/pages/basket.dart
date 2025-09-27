@@ -12,13 +12,13 @@ class Basket extends StatefulWidget {
 class _BasketState extends State<Basket> {
   @override
   Widget build(BuildContext context) {
-    final card = Provider.of<CardModel>(context);
-
+    final card = context.watch<CardModel>();
+    final total = context.select<CardModel, double>((c) => c.totalPrice);
     return Scaffold(
       appBar: AppBar(
         title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Text("Basket"), Text("${card.totalPrice.toString()}₺")],
+          children: [Text("Basket"), Text("$total:₺")],
         ),
         backgroundColor: Colors.greenAccent,
       ),
@@ -110,9 +110,7 @@ class _BasketState extends State<Basket> {
                             children: [
                               IconButton(
                                 icon: Icon(Icons.remove),
-                                onPressed: () {
-                                  items.remove(idController);
-                                },
+                                onPressed: () => context.read<CardModel>().remove(idController)
                               ),
                             ],
                           ),
